@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+app:
+  cors:
+    allowed-origin: ${APP_CORS_ALLOWED_ORIGIN:http://localhost:5173}
+
+spring:
+  application:
+    name: ai-chatbot-backend
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY:}
