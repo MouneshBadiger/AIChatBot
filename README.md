@@ -58,12 +58,35 @@ npm run build
 The backend supports these environment variables:
 
 ```bash
-OPENAI_API_KEY=your_openai_api_key
+GEMINI_API_KEY=your_gemini_api_key
+GEMINI_MODEL=gemini-1.5-flash
+GEMINI_BASE_URL=https://generativelanguage.googleapis.com
 APP_CORS_ALLOWED_ORIGIN=http://localhost:5173
 SERVER_PORT=8080
 ```
 
-`OPENAI_API_KEY` is optional for the included health endpoint, but it is expected once you add Spring AI powered features.
+`GEMINI_API_KEY` is required for `POST /api/chat`. The application reads it from Spring configuration or the `GEMINI_API_KEY` environment variable only, so secrets are never hardcoded in the controller.
+
+### Configure Gemini locally
+
+Set the API key before starting the backend:
+
+```bash
+export GEMINI_API_KEY=your_gemini_api_key
+export GEMINI_MODEL=gemini-1.5-flash
+cd backend
+mvn spring-boot:run
+```
+
+You can also override the values in `backend/src/main/resources/application.yml` with environment variables when running from your IDE.
+
+### Configure Gemini in deployment
+
+Provide `GEMINI_API_KEY` as an environment variable or secret in your deployment platform, plus optional `GEMINI_MODEL` and `GEMINI_BASE_URL` overrides. Examples include:
+
+- Docker / Compose: set `GEMINI_API_KEY` in the container environment.
+- Kubernetes: mount `GEMINI_API_KEY` from a `Secret` and expose it as an environment variable.
+- PaaS platforms such as Render, Railway, or Heroku: add `GEMINI_API_KEY` in the service's secret or environment variable settings.
 
 ### Run locally
 
@@ -72,7 +95,7 @@ cd backend
 mvn spring-boot:run
 ```
 
-The backend listens on `http://localhost:8080` by default and exposes a health endpoint at `GET /api/health`.
+The backend listens on `http://localhost:8080` by default and exposes `GET /api/health` plus `POST /api/chat` for Gemini-backed chat responses.
 
 ### Test
 
@@ -87,3 +110,16 @@ mvn test
 2. Start the frontend.
 3. Open the frontend in a browser.
 4. The status pill in the UI updates based on the backend health response.
+
+
+### Chat endpoint
+
+Send a request like:
+
+```bash
+curl -X POST http://localhost:8080/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message":"Hello from Gemini"}'
+```
+
+Successful and failed responses both return structured JSON with the assistant reply, request metadata, and error details when applicable.
