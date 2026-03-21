@@ -95,13 +95,32 @@ cd backend
 mvn spring-boot:run
 ```
 
+
 The backend listens on `http://localhost:8080` by default and exposes `GET /api/health` plus `POST /api/chat` for Gemini-backed chat responses.
+
+If you have multiple services running and port 8080 is busy, you can override the port:
+
+```bash
+cd backend
+mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=8081"
+```
+
+The backend listens on `http://localhost:8080` by default and exposes a health endpoint at `GET /api/health`.
+
 
 ### Test
 
 ```bash
 cd backend
 mvn test
+```
+
+Note: the Spring AI OpenAI autoconfiguration requires an API key when the application context loads.
+If you haven't configured a key yet, you can still build the backend jar with tests skipped:
+
+```bash
+cd backend
+mvn -DskipTests package
 ```
 
 ## Connectivity flow

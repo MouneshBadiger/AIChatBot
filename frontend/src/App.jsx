@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import ChatWindow from './components/ChatWindow'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8081'
 
 function App() {
   const [healthStatus, setHealthStatus] = useState({
