@@ -1,4 +1,6 @@
 package com.aichatbot.backend.model;
 
-public record ChatResponse(String reply, ChatMetadata metadata, ChatError error) {
+import java.util.List;
+
+public record ChatResponse(String reply, ChatMetadata metadata, List<ChatSource> sources, ChatError error) {
 }
