@@ -180,6 +180,17 @@ p {
   border: 0;
 }
 
+.chat-error {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 88, 88, 0.5);
+  background: rgba(255, 88, 88, 0.08);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+}
+
 @media (max-width: 720px) {
   .app-header,
   .chat-window__meta,

@@ -3,12 +3,15 @@ server:
 
 app:
   cors:
-    allowed-origin: ${APP_CORS_ALLOWED_ORIGIN:http://localhost:5173}
+    allowed-origin: http://localhost:5173
 
 gemini:
-  api-key: ${GEMINI_API_KEY:YOUR_GEMINI_API_KEY}
-  model: ${GEMINI_MODEL:gemini-1.5-flash}
-  base-url: ${GEMINI_BASE_URL:https://generativelanguage.googleapis.com}
+  api-key: AIzaSyB88Avj8r4gqkCR7NxPet-m9H3jnPLdYSg
+  # Note: model list evolves over time. If chat replies fail with "model not found",
+  # call `GET https://generativelanguage.googleapis.com/v1beta/models?key=...`
+  # and pick a model that supports generateContent.
+  model: gemini-2.5-flash
+  base-url: https://generativelanguage.googleapis.com
 
 spring:
   application:
