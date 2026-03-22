@@ -4,15 +4,33 @@ server:
 app:
   cors:
     allowed-origin: http://localhost:5173
+  rag:
+    chunk-size: 1200
+    chunk-overlap: 200
+    top-k: 4
 
 gemini:
-  api-key: AIzaSyB88Avj8r4gqkCR7NxPet-m9H3jnPLdYSg
-  # Note: model list evolves over time. If chat replies fail with "model not found",
-  # call `GET https://generativelanguage.googleapis.com/v1beta/models?key=...`
-  # and pick a model that supports generateContent.
-  model: gemini-2.5-flash
+  api-key: ${GEMINI_API_KEY:}
+  model: ${GEMINI_MODEL:gemini-2.5-flash}
   base-url: https://generativelanguage.googleapis.com
 
 spring:
   application:
     name: ai-chatbot-backend
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 25MB
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/aichatbot}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+  sql:
+    init:
+      mode: always
+  ai:
+    openai:
+      api-key: ${SPRING_AI_OPENAI_API_KEY:}
+      embedding:
+        options:
+          model: ${SPRING_AI_OPENAI_EMBEDDING_MODEL:text-embedding-3-small}
